@@ -5,12 +5,13 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/WithLove.png",
-    "scheme": "myapp",
+    "scheme": "withlove",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#DFF6E3"
+      "backgroundColor": "#DFF6E3",
+      "imageWidth": 200
     },
     "newArchEnabled": true,
     "ios": {
