@@ -4,7 +4,7 @@
     "slug": "WithLove",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/WithLove.png",
+    "icon": "./assets/images/withLove.png",
     "scheme": "withlove",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,14 +19,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/WithLove.png",
+        "foregroundImage": "./assets/images/withLove.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/WithLove.png"
+      "favicon": "./assets/images/withLove.png"
     },
     "plugins": [],
     "experiments": {
