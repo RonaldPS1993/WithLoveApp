@@ -2,7 +2,7 @@ import { Text, View, Dimensions, StyleSheet, Image, TouchableOpacity } from "rea
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useFonts } from 'expo-font';
 const { width, height } = Dimensions.get("window");
-
+import { router } from "expo-router";
 export default function Home() {
   const [fontsLoaded] = useFonts({
     PoppinsSemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
@@ -13,7 +13,7 @@ export default function Home() {
   }
   return (
     <View style={styles.fullScreen}>
-      <TouchableOpacity onPress={() => console.log("create")}>
+      <TouchableOpacity onPress={() => router.push("/createMoment")}>
         <Image source={require("../../assets/images/createIcon.png")} 
         style={{ width: (width + height) * 0.12, height: (width + height) * 0.12, marginTop: hp("20%") }} />
       </TouchableOpacity>

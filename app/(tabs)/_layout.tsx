@@ -1,8 +1,8 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { Text, View, Dimensions, SafeAreaView, Image } from 'react-native';
 import { useFonts } from 'expo-font';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import MainHeader from '../headers/mainHeader';
 const { width, height } = Dimensions.get("window");
 
 
@@ -38,8 +38,8 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           headerShown: true,
-          header: CustomHeader,
-          tabBarLabelStyle: { fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.008, marginTop: (width + height) * 0.002 },
+          header: MainHeader,
+          tabBarLabelStyle: { fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.008, marginTop: (width + height) * 0.002, width: wp("10%") },
           tabBarIcon: ({ color }) => {
             return (color == "#9B59B6" ? <Image source={require("../../assets/images/house_focused.png")} 
             style={{ width: (width + height) * 0.025, height: (width + height) * 0.025 }} /> 
@@ -51,14 +51,22 @@ export default function TabLayout() {
         name="library"
         options={{
           title: 'Library',
-          tabBarLabelStyle: { fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.008, marginTop: (width + height) * 0.002 },
+          tabBarLabelStyle: { fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.008, marginTop: (width + height) * 0.002, width: wp("10%") },
           headerShown: true,
-          header: CustomHeader,
+          header: MainHeader,
           tabBarIcon: ({ color }) => {
             return (color == "#9B59B6" ? <Image source={require("../../assets/images/library_focused.png")} 
             style={{ width: (width + height) * 0.025, height: (width + height) * 0.025 }} /> 
               : <Image source={require("../../assets/images/library.png")} style={{ width: (width + height) * 0.025, height: (width + height) * 0.025 }} />)
           },
+        }}
+      />
+      <Tabs.Screen
+        name="createMoment"
+        options={{
+          href: null,
+          headerShown: true,
+          header: CustomHeader,
         }}
       />
     </Tabs>
