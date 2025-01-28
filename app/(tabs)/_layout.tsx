@@ -1,9 +1,10 @@
-import { Tabs } from 'expo-router';
-import { Text, View, Dimensions, SafeAreaView, Image } from 'react-native';
+import { router, Tabs } from 'expo-router';
+import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import MainHeader from '../headers/mainHeader';
 const { width, height } = Dimensions.get("window");
+
+
 
 
 export default function TabLayout() {
@@ -19,18 +20,43 @@ export default function TabLayout() {
         backgroundColor: '#DFF6E3',
       }}>
         <SafeAreaView style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <Image source={require("../../assets/images/withlovelogo.png")} style={{ width: width * 0.1, height: width * 0.1, marginLeft: width * 0.05 }} />
+          <TouchableOpacity onPress={() => router.back()}>
+            <Image 
+            source={require("../../assets/images/backArrow.png")} 
+            style={{ width: width * 0.05, height: width * 0.05, marginLeft: width * 0.05 }} />
+          </TouchableOpacity>
           <Text style={{
-            fontSize: (width + height) * 0.025,
-            color: '#9B59B6',
-            fontFamily: "ClickerScript"
+            fontSize: (width + height) * 0.017,
+            color: '#000000',
+            fontFamily: "PoppinsSemiBold"
           }}>
-          With Love
+          Create Moment
         </Text>
         </SafeAreaView>
       </View>
     );
   };
+
+   const MainHeader = () => {
+    return (
+        <View style={{
+          height: height * 0.13,
+          backgroundColor: '#DFF6E3',
+        }}>
+          <SafeAreaView style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <Image source={require("../../assets/images/withlovelogo.png")} style={{ width: width * 0.1, height: width * 0.1, marginLeft: width * 0.05 }} />
+            <Text style={{
+              fontSize: (width + height) * 0.025,
+              color: '#9B59B6',
+              fontFamily: "ClickerScript"
+            }}>
+            With Love
+          </Text>
+          </SafeAreaView>
+        </View>
+      );
+  }
+
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: '#9B59B6', tabBarInactiveTintColor:"#A3A3A3", tabBarStyle: { backgroundColor: '#DFF6E3' } }}>
       <Tabs.Screen

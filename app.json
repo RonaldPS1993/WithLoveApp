@@ -28,7 +28,14 @@
       "output": "static",
       "favicon": "./assets/images/withLove.png"
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "WithLove accesses your photos to let you share your moments"
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     }
