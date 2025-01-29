@@ -58,7 +58,7 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: '#9B59B6', tabBarInactiveTintColor:"#A3A3A3", tabBarStyle: { backgroundColor: '#DFF6E3' } }}>
+    <Tabs backBehavior='history' screenOptions={{ tabBarActiveTintColor: '#9B59B6', tabBarInactiveTintColor:"#A3A3A3", tabBarStyle: { backgroundColor: '#DFF6E3' } }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -93,6 +93,13 @@ export default function TabLayout() {
           href: null,
           headerShown: true,
           header: CustomHeader,
+        }}
+      />
+      <Tabs.Screen
+        name="preview"
+        options={{
+          href: null,
+          headerShown: false,
         }}
       />
     </Tabs>

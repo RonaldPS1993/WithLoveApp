@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { useState } from 'react';
 const { width, height } = Dimensions.get("window");
 import * as ImagePicker from 'expo-image-picker';
+import { router } from "expo-router";
 
 export default function CreateMoment() {
   const [fontsLoaded] = useFonts({
@@ -11,6 +12,7 @@ export default function CreateMoment() {
     "PoppinsRegular": require("../../assets/fonts/Poppins-Regular.ttf"),
   });
   const [image, setImage] = useState<string | null>(null);
+  const [caption, setCaption] = useState<string>("");
   if (!fontsLoaded) {
     return null;
   }
@@ -25,6 +27,7 @@ export default function CreateMoment() {
          multiline={true}
       placeholder="Write something special..." 
       maxLength={80}
+      onChangeText={(text) => setCaption(text)}
       />
       <TouchableOpacity 
         onPress={async () => {
@@ -98,7 +101,13 @@ export default function CreateMoment() {
         borderRadius: 15,
         justifyContent: "center",
         alignItems: "center"
-      }}>
+      }} onPress={() => router.push({
+        pathname: "./preview",
+        params: {
+          image: image,
+          caption: caption
+        }
+      })}>
         <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.012, color: "#FFFFF7"}}>
           Preview
         </Text>
