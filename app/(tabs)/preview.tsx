@@ -4,7 +4,8 @@ import { useFonts } from 'expo-font';
 import { useState } from 'react';
 const { width, height } = Dimensions.get("window");
 import { useLocalSearchParams, router } from "expo-router";
-
+import { storage } from "../../firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 export default function Preview() {
     const [fontsLoaded] = useFonts({
         "PoppinsSemiBold": require("../../assets/fonts/Poppins-SemiBold.ttf"),
@@ -15,8 +16,31 @@ export default function Preview() {
         return null;
     }
     const { image, caption } = useLocalSearchParams();
-    const shareMoment = () => {
-        console.log("share moment");
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+    const shareMoment = async () => {
+        try {
+            const response = await fetch(image as string);
+            const blob = await response.blob();
+            const storageRef = ref(storage, `images/${new Date().getTime()}`);
+            const uploadTask = uploadBytesResumable(storageRef, blob);
+            uploadTask.on("state_changed", (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+            }, (error) => {
+                console.log("Error uploading image:", error);
+            }, () => {
+                getDownloadURL(storageRef).then((url) => {
+                    console.log("Image uploaded successfully:", url);
+                    setImageUrl(url);
+                });
+            });
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+        if (imageUrl) {
+            console.log(imageUrl);
+        }
     }
     return (
         <View style={{width: width, height: height, backgroundColor: "#FFFFF7"}}>
