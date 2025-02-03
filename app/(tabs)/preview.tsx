@@ -15,11 +15,14 @@ export default function Preview() {
         return null;
     }
     const { image, caption } = useLocalSearchParams();
+    const shareMoment = () => {
+        console.log("share moment");
+    }
     return (
         <View style={{width: width, height: height, backgroundColor: "#FFFFF7"}}>
-            <ImageBackground source={{uri: image as string}} style={{width: width, height: hp("80%"), alignItems: "center"}}>
-                <Text numberOfLines={3} style={{fontFamily: "ClickerScript", fontSize: (width + height) * 0.023, color: "#FFFFFF", 
-                    marginTop: hp("60%"), width: wp("80%"), height: hp("20%")}} >{caption}</Text>
+            <ImageBackground source={{uri: image as string}} resizeMode="cover" style={{width: width, height: hp("80%"), alignItems: "center"}}>
+                <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", fontSize: (width + height) * 0.024, color: "#FFFFFF", 
+                    marginTop: hp("60%"), width: wp("85%"), height: hp("20%")}} >{caption}</Text>
             </ImageBackground>
             <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center", gap: wp("10%")}}>
                 <TouchableOpacity style={{
@@ -43,9 +46,8 @@ export default function Preview() {
                     borderRadius: 15,
                     justifyContent: "center",
                     alignItems: "center"
-                }} onPress={() => {console.log("create");
-                }}>
-                    <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.015, color: "#FFFFFF"}}>Create</Text>
+                }} onPress={shareMoment}>
+                    <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.015, color: "#FFFFFF"}}>Share</Text>
                 </TouchableOpacity>
             </View>
         </View>
