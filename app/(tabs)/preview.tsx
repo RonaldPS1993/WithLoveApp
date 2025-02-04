@@ -7,7 +7,6 @@ import { useLocalSearchParams, router } from "expo-router";
 import { storage } from "../../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import * as Linking from 'expo-linking';
-// import Share from 'react-native-share';
 
 
 export default function Preview() {
@@ -52,11 +51,7 @@ export default function Preview() {
                    url: myUrl 
                 });
                 if (result.action === Share.sharedAction) {
-                  if (result.activityType) {
-                    // shared with activity type of result.activityType
-                  } else {
-                    // shared
-                  }
+                  router.push("/(tabs)")
                 } else if (result.action === Share.dismissedAction) {
                   // dismissed
                 }
