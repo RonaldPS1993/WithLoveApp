@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, StyleSheet, Image, TouchableOpacity, TextInput, Keyboard, ImageBackground, SafeAreaView } from "react-native";
+import { Text, View, Dimensions, Share, Image, TouchableOpacity, TextInput, Keyboard, ImageBackground, SafeAreaView } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
@@ -6,6 +6,10 @@ const { width, height } = Dimensions.get("window");
 import { useLocalSearchParams, router } from "expo-router";
 import { storage } from "../../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import * as Linking from 'expo-linking';
+// import Share from 'react-native-share';
+
+
 export default function Preview() {
     const [fontsLoaded] = useFonts({
         "PoppinsSemiBold": require("../../assets/fonts/Poppins-SemiBold.ttf"),
@@ -40,7 +44,27 @@ export default function Preview() {
         }
         if (imageUrl) {
             console.log(imageUrl);
+            const myUrl = Linking.createURL("/showMoment", {scheme: "withlove", queryParams: {message: caption, imageUrl: imageUrl}})
+            try {
+                const result = await Share.share({
+                  message:
+                    'Someone has shared a moment with you',
+                   url: myUrl 
+                });
+                if (result.action === Share.sharedAction) {
+                  if (result.activityType) {
+                    // shared with activity type of result.activityType
+                  } else {
+                    // shared
+                  }
+                } else if (result.action === Share.dismissedAction) {
+                  // dismissed
+                }
+              } catch (error: any) {
+                console.log(error);
+              }
         }
+
     }
     return (
         <View style={{width: width, height: height, backgroundColor: "#FFFFF7"}}>

@@ -34,6 +34,21 @@
         {
           "photosPermission": "WithLove accesses your photos to let you share your moments"
         }
+      ],
+      [
+        "react-native-share",
+        {
+          "ios": [
+            "fb",
+            "instagram",
+            "twitter"
+          ],
+          "android": [
+            "com.facebook.katana",
+            "com.instagram.android",
+            "com.twitter.android"
+          ]
+        }
       ]
     ],
     "experiments": {
