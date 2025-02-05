@@ -15,13 +15,25 @@
     },
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.withloveapp.WithLove",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "fb",
+          "instagram",
+          "twitter"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/withLove.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -53,6 +65,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ba8bb9d2-d5df-4b7b-a87b-f885fc17f9a4"
+      }
     }
   }
 }
