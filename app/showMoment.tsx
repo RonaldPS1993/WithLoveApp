@@ -41,7 +41,7 @@ export default function Moment(){
             router.push({
                 pathname: "./(tabs)",
             })
-        }, 5000)
+        }, 10000)
     };
     
     const handleInitialUrl = async () => {

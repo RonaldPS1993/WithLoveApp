@@ -19,30 +19,8 @@ export default function Preview() {
         return null;
     }
     const { image, caption } = useLocalSearchParams();
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-    const shareMoment = async () => {
-        try {
-            const response = await fetch(image as string);
-            const blob = await response.blob();
-            const storageRef = ref(storage, `images/${new Date().getTime()}`);
-            const uploadTask = uploadBytesResumable(storageRef, blob);
-            uploadTask.on("state_changed", (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload is " + progress + "% done");
-            }, (error) => {
-                console.log("Error uploading image:", error);
-            }, () => {
-                getDownloadURL(storageRef).then((url) => {
-                    console.log("Image uploaded successfully:", url);
-                    setImageUrl(url);
-                });
-            });
-        } catch (error) {
-            console.error("Error uploading image:", error);
-        }
-        if (imageUrl) {
-            console.log(imageUrl);
+    const openShare = async (imageUrl: string) => {
             const myUrl = Linking.createURL("/showMoment", {scheme: "withlove", queryParams: {message: caption, imageUrl: imageUrl}})
             try {
                 const result = await Share.share({
@@ -58,7 +36,29 @@ export default function Preview() {
               } catch (error: any) {
                 console.log(error);
               }
+    }
+
+    const shareMoment = async () => {
+        try {
+            const response = await fetch(image as string);
+            const blob = await response.blob();
+            const storageRef = ref(storage, `images/${new Date().getTime()}`);
+            const uploadTask = uploadBytesResumable(storageRef, blob);
+            uploadTask.on("state_changed", (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+            }, (error) => {
+                console.log("Error uploading image:", error);
+            }, () => {
+                getDownloadURL(storageRef).then(async (url) => {
+                    console.log("Image uploaded successfully:", url);
+                    await openShare(url)
+                });
+            });
+        } catch (error) {
+            console.error("Error uploading image:", error);
         }
+        
 
     }
     return (
