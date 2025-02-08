@@ -4,14 +4,13 @@
     "slug": "WithLove",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/withLove.png",
+    "icon": "./assets/images/withlovelogo.png",
     "scheme": "withlove",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#DFF6E3",
-      "imageWidth": 200
+      "backgroundColor": "#DFF6E3"
     },
     "newArchEnabled": true,
     "ios": {
@@ -28,7 +27,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/withLove.png",
+        "foregroundImage": "./assets/images/withlovelogo.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -38,7 +37,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/withLove.png"
+      "favicon": "./assets/images/withlovelogo.png"
     },
     "plugins": [
       [
@@ -60,6 +59,14 @@
             "com.instagram.android",
             "com.twitter.android"
           ]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
         }
       ]
     ],
