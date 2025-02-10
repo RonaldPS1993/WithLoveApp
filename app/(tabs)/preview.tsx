@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, Share, Image, TouchableOpacity, TextInput, Keyboard, ImageBackground, SafeAreaView } from "react-native";
+import { Text, View, Dimensions, Share, Image, TouchableOpacity, ImageBackground, ActivityIndicator } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
@@ -18,6 +18,7 @@ export default function Preview() {
     if (!fontsLoaded) {
         return null;
     }
+    const [loading, setLoading] = useState<boolean>(false)
     const { image, caption } = useLocalSearchParams();
 
     const openShare = async (imageUrl: string) => {
@@ -29,9 +30,11 @@ export default function Preview() {
                    url: myUrl 
                 });
                 if (result.action === Share.sharedAction) {
+                    setLoading(false)
                   router.push("/(tabs)")
                 } else if (result.action === Share.dismissedAction) {
                   // dismissed
+                  setLoading(false)
                 }
               } catch (error: any) {
                 console.log(error);
@@ -39,6 +42,7 @@ export default function Preview() {
     }
 
     const shareMoment = async () => {
+        setLoading(true)
         try {
             const response = await fetch(image as string);
             const blob = await response.blob();
@@ -90,7 +94,9 @@ export default function Preview() {
                     justifyContent: "center",
                     alignItems: "center"
                 }} onPress={shareMoment}>
-                    <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.015, color: "#FFFFFF"}}>Share</Text>
+                    {loading ? <ActivityIndicator size={"small"} color={"#FFFFFF"} /> :  
+                    <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.015, color: "#FFFFFF"}}>Share</Text>}
+                   
                 </TouchableOpacity>
             </View>
         </View>
