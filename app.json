@@ -8,8 +8,6 @@
     "scheme": "withlove",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
       "backgroundColor": "#DFF6E3"
     },
     "newArchEnabled": true,

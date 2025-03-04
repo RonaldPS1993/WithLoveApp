@@ -8,6 +8,8 @@ import { storage } from "../../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import * as Linking from 'expo-linking';
 
+const MAINURL = 'https://withlove.expo.app/showMoment'
+
 
 export default function Preview() {
     const [fontsLoaded] = useFonts({
@@ -23,7 +25,8 @@ export default function Preview() {
     const { image, caption } = useLocalSearchParams();
 
     const openShare = async (imageUrl: string) => {
-            const myUrl = Linking.createURL("/showMoment", {scheme: "withlove", queryParams: {message: caption, imageUrl: imageUrl}})
+        
+            const myUrl = Linking.createURL(MAINURL, { queryParams: {message: caption, imageUrl: imageUrl}})
             try {
                 const result = await Share.share({
                   message:
