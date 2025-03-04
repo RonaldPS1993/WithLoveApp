@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, Share, Image, TouchableOpacity, ImageBackground, ActivityIndicator } from "react-native";
+import { Text, View, Dimensions, Share, TouchableOpacity, ImageBackground, ActivityIndicator, Modal } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
@@ -19,6 +19,7 @@ export default function Preview() {
         return null;
     }
     const [loading, setLoading] = useState<boolean>(false)
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const { image, caption } = useLocalSearchParams();
 
     const openShare = async (imageUrl: string) => {
@@ -65,11 +66,25 @@ export default function Preview() {
         
 
     }
+    const editText = async () => {
+        console.log("Open modal");
+        setModalVisible(true)
+    }
+
     return (
         <View style={{width: width, height: height, backgroundColor: "#FFFFF7"}}>
-            <ImageBackground source={{uri: image as string}} resizeMode="cover" style={{width: width, height: hp("80%"), alignItems: "center"}}>
-                <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", fontSize: (width + height) * 0.024, color: "#FFFFFF", 
+            <ImageBackground source={{uri: image as string}} resizeMode="cover" 
+            style={{width: width, height: hp("80%"), alignItems: "center"}}>
+                <TouchableOpacity onPress={editText}>
+                    <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", 
+                    fontSize: (width + height) * 0.024, color: "#FFFFFF", 
                     marginTop: hp("60%"), width: wp("85%"), height: hp("20%")}} >{caption}</Text>
+                </TouchableOpacity>
+                <Modal animationType="fade" visible={modalVisible} transparent={true}>
+                    <View style={{width: wp("60%"), height: hp("40%"), backgroundColor: "#000000"}}>
+
+                    </View>
+                </Modal>
             </ImageBackground>
             <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center", gap: wp("10%")}}>
                 <TouchableOpacity style={{
@@ -78,7 +93,7 @@ export default function Preview() {
                     height: hp("5%"),
                     alignSelf: "center",
                     marginTop: hp("3%"),
-                    borderRadius: 15,
+                    borderRadius: 25,
                     justifyContent: "center",
                     alignItems: "center"
                 }} onPress={() => router.back()}>
@@ -90,7 +105,7 @@ export default function Preview() {
                     height: hp("5%"),
                     alignSelf: "center",
                     marginTop: hp("3%"),
-                    borderRadius: 15,
+                    borderRadius: 25,
                     justifyContent: "center",
                     alignItems: "center"
                 }} onPress={shareMoment}>

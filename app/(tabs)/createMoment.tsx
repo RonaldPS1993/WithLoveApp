@@ -94,11 +94,11 @@ export default function CreateMoment() {
       </View>
       <TouchableOpacity style={{
         backgroundColor: "#9B59B6",
-        width: wp("60%"),
+        width: wp("50%"),
         height: hp("5%"),
         alignSelf: "center",
         marginTop: hp("3%"),
-        borderRadius: 15,
+        borderRadius: 25,
         justifyContent: "center",
         alignItems: "center"
       }} onPress={() => router.push({

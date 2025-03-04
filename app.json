@@ -16,6 +16,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.withloveapp.WithLove",
+      "associatedDomains": ["applinks:withlove.expo.app"],
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "fb",
@@ -23,7 +24,7 @@
           "twitter"
         ],
         "ITSAppUsesNonExemptEncryption": false
-      }
+      } 
     },
     "android": {
       "adaptiveIcon": {
@@ -36,7 +37,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/withlovelogo.png"
     },
     "plugins": [
