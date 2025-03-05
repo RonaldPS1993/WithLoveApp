@@ -8,7 +8,7 @@ import { storage } from "../../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import * as Linking from 'expo-linking';
 
-const MAINURL = 'https://withlove.expo.app/showMoment'
+const MAINURL = 'withlove.expo.app/showMoment'
 
 
 export default function Preview() {

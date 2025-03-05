@@ -13,7 +13,7 @@ export default function Layout() {
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
-    }, 1000)
+    }, 2000)
   }, []);
 
 
