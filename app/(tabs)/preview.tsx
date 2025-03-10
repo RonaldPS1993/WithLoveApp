@@ -8,7 +8,7 @@ import { storage } from "../../firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import * as Linking from 'expo-linking';
 
-const MAINURL = 'withlove.expo.app/showMoment'
+const MAINURL = 'https://withlove.expo.app/showMoment'
 
 
 export default function Preview() {
@@ -22,11 +22,12 @@ export default function Preview() {
     }
     const [loading, setLoading] = useState<boolean>(false)
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const { image, caption } = useLocalSearchParams();
+    const { image, caption, color, size } = useLocalSearchParams();
+    const textColor = Array.isArray(color) ? color[0] : color || "black";
 
     const openShare = async (imageUrl: string) => {
         
-            const myUrl = Linking.createURL(MAINURL, { queryParams: {message: caption, imageUrl: imageUrl}})
+            const myUrl = Linking.createURL(MAINURL, { queryParams: {message: caption, imageUrl: imageUrl}}).replace(/^withlove:\/\//, '')
             try {
                 const result = await Share.share({
                   message:
@@ -69,25 +70,16 @@ export default function Preview() {
         
 
     }
-    const editText = async () => {
-        console.log("Open modal");
-        setModalVisible(true)
-    }
 
     return (
         <View style={{width: width, height: height, backgroundColor: "#FFFFF7"}}>
             <ImageBackground source={{uri: image as string}} resizeMode="cover" 
             style={{width: width, height: hp("80%"), alignItems: "center"}}>
-                <TouchableOpacity onPress={editText}>
-                    <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", 
-                    fontSize: (width + height) * 0.024, color: "#FFFFFF", 
+                <View>
+                    <Text numberOfLines={4} style={{fontFamily: "ClickerScript", textAlign: "center", 
+                    fontSize: (Number(size) * 2.5), color: textColor, 
                     marginTop: hp("60%"), width: wp("85%"), height: hp("20%")}} >{caption}</Text>
-                </TouchableOpacity>
-                <Modal animationType="fade" visible={modalVisible} transparent={true}>
-                    <View style={{width: wp("60%"), height: hp("40%"), backgroundColor: "#000000"}}>
-
-                    </View>
-                </Modal>
+                </View>
             </ImageBackground>
             <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center", gap: wp("10%")}}>
                 <TouchableOpacity style={{

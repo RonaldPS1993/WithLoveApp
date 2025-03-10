@@ -5,6 +5,8 @@ import { useState } from 'react';
 const { width, height } = Dimensions.get("window");
 import * as ImagePicker from 'expo-image-picker';
 import { router } from "expo-router";
+import StyleControls from "@/components/StyleControls";
+import { useEditorStore } from "@/store/editor-store";
 
 export default function CreateMoment() {
   const [fontsLoaded] = useFonts({
@@ -13,6 +15,7 @@ export default function CreateMoment() {
   });
   const [image, setImage] = useState<string | null>(null);
   const [caption, setCaption] = useState<string>("");
+  const {color, fontSize, setColor, setFontSize} = useEditorStore()
   if (!fontsLoaded) {
     return null;
   }
@@ -20,21 +23,31 @@ export default function CreateMoment() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={{width: width, height: "100%", backgroundColor: "#FFFFF7"}}>
       <TextInput 
-      placeholderTextColor="#8A8A8A" 
-      style={{fontFamily: "PoppinsRegular", fontSize: (width + height) * 0.01, color: "#4A4A4A",
-         width: width * 0.9, height: height * 0.05, marginTop: height * 0.05, marginLeft: width * 0.05,
-         borderWidth: 1, borderColor: "#9B59B6", borderRadius: 15, textAlign: "left", paddingLeft: 10, paddingRight: 10}} 
-         multiline={true}
-      placeholder="Write something special..." 
-      maxLength={80}
-      onChangeText={(text) => setCaption(text)}
+        value={caption}
+        placeholderTextColor="#8A8A8A" 
+        style={[styles.input, {color, fontSize}]} 
+        multiline={true}
+        placeholder="Write something special..." 
+        maxLength={80}
+        onChangeText={(text) => setCaption(text)}
       />
       <TouchableOpacity 
+        style={{
+          width: wp("90%"),
+          height: hp("40%"),
+          backgroundColor: image ? undefined : '#DFF6E3',
+          alignSelf: "center",
+          marginTop: hp("2%"),
+          borderRadius: 15,
+          overflow: "hidden",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: hp("2%")
+        }}
         onPress={async () => {
           const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             quality: 1,
-            allowsEditing: true,
             aspect: [4, 3],
           });
 
@@ -44,44 +57,8 @@ export default function CreateMoment() {
             setImage(selectedImage.uri);
           }
         }}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: '#DFF6E3',
-          padding: wp("3%"),
-          borderRadius: 15,
-          marginTop: hp("5%"),
-          width: wp("50%"),
-          alignSelf: "center",
-          justifyContent: "center",
-        }}
       >
-        <Image 
-          source={require("../../assets/images/gallery.png")}
-          style={{
-            width: wp("7%"),
-            height: wp("7%"),
-            marginRight: wp("2%")
-          }}
-        />
-        <Text style={{
-          fontFamily: "PoppinsRegular",
-          fontSize: (width + height) * 0.012,
-          color: "#4A4A4A"
-        }}>
-          Add Image
-        </Text>
-      </TouchableOpacity>
-      <View style={{
-        width: wp("90%"),
-        height: hp("40%"),
-        backgroundColor: image ? undefined : '#DFF6E3',
-        alignSelf: "center",
-        marginTop: hp("5%"),
-        borderRadius: 15,
-        overflow: "hidden"
-      }}>
-        {image && (
+        {image ? (
           <Image
             source={{ uri: image }}
             style={{
@@ -90,8 +67,18 @@ export default function CreateMoment() {
               resizeMode: "contain"
             }}
           />
-        )}
-      </View>
+        ): 
+        <View>
+          <Image 
+          source={require("../../assets/images/gallery.png")}
+          style={{
+            width: wp("10%"),
+            height: wp("10%"),
+          }}
+          />
+        </View>}
+      </TouchableOpacity>
+      <StyleControls color={color} fontSize={fontSize} onColorChange={setColor} onFontSizeChange={setFontSize} />
       <TouchableOpacity style={{
         backgroundColor: "#9B59B6",
         width: wp("50%"),
@@ -105,7 +92,9 @@ export default function CreateMoment() {
         pathname: "./preview",
         params: {
           image: image,
-          caption: caption
+          caption: caption, 
+          color: color,
+          size: fontSize
         }
       })}>
         <Text style={{fontFamily: "PoppinsSemiBold", fontSize: (width + height) * 0.012, color: "#FFFFF7"}}>
@@ -116,3 +105,19 @@ export default function CreateMoment() {
     </TouchableWithoutFeedback>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    fontFamily: "PoppinsRegular",
+    width: wp("90%"), 
+    height: hp("10%"), 
+    marginTop: hp("2%"),
+    borderWidth: 1, 
+    borderColor: "#000000", 
+    borderRadius: 15, 
+    textAlign: "left", 
+    padding: 10, 
+    alignSelf: "center",
+    backgroundColor: "#EEEEEE"
+  }
+})
