@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { router } from "expo-router";
 import StyleControls from "@/components/StyleControls";
 import { useEditorStore } from "@/store/editor-store";
+import { ImagePlus } from "lucide-react-native"
 
 export default function CreateMoment() {
   const [fontsLoaded] = useFonts({
@@ -35,7 +36,7 @@ export default function CreateMoment() {
         style={{
           width: wp("90%"),
           height: hp("40%"),
-          backgroundColor: image ? undefined : '#DFF6E3',
+          backgroundColor: image ? undefined : '#f4f4f5',
           alignSelf: "center",
           marginTop: hp("2%"),
           borderRadius: 15,
@@ -69,13 +70,7 @@ export default function CreateMoment() {
           />
         ): 
         <View>
-          <Image 
-          source={require("../../assets/images/gallery.png")}
-          style={{
-            width: wp("10%"),
-            height: wp("10%"),
-          }}
-          />
+          <ImagePlus size={wp("15%")} color={"#666"} />
         </View>}
       </TouchableOpacity>
       <StyleControls color={color} fontSize={fontSize} onColorChange={setColor} onFontSizeChange={setFontSize} />
@@ -118,6 +113,6 @@ const styles = StyleSheet.create({
     textAlign: "left", 
     padding: 10, 
     alignSelf: "center",
-    backgroundColor: "#EEEEEE"
+    backgroundColor: "#dcdcdc"
   }
 })

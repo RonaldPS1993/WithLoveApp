@@ -17,7 +17,7 @@ export default function StyleControls({color, fontSize, onColorChange, onFontSiz
     return(
         <View style={styles.container}>
             <View style={styles.row}>
-                <Type size={20} color="#666" />
+                <Type size={wp("6%")} color="#666" />
                 {FONT_SIZES.map((size) => (
                     <TouchableOpacity 
                         key={size} 
@@ -27,14 +27,14 @@ export default function StyleControls({color, fontSize, onColorChange, onFontSiz
                 ))}
             </View>
             <View style={styles.row}>
-                <Palette size={20} color={"#666"} />
+                <Palette size={wp("6%")} color={"#666"} />
                 {COLORS.map((c) => (
                     <TouchableOpacity 
                         key={c}
-                        style={[styles.colorButton, {backgroundColor: c}]}
+                        style={[styles.colorButton, {backgroundColor: c}, c === "#ffffff" && styles.whiteColorButton]}
                         onPress={() => onColorChange(c)}
                     >
-                        {color === c && <View style={styles.selectedColor} />}
+                        {color === c && <View style={[styles.selectedColor, c === "#ffffff" && styles.selectedWhiteColor]} />}
                     </TouchableOpacity>
                 ))}
             </View>
@@ -77,5 +77,12 @@ const styles = StyleSheet.create({
         height: 8,
         borderRadius: 4,
         backgroundColor: "#ffffff"
-    }
+    },
+    whiteColorButton: {
+        borderWidth: 1,
+        borderColor: "#e5e5e5"
+    },
+    selectedWhiteColor: {
+        backgroundColor: "#2563eb"
+    },
 })
