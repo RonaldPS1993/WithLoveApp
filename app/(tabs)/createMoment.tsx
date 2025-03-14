@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { router } from "expo-router";
 import StyleControls from "@/components/StyleControls";
 import { useEditorStore } from "@/store/editor-store";
-import { ImagePlus } from "lucide-react-native"
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 export default function CreateMoment() {
   const [fontsLoaded] = useFonts({
@@ -70,7 +70,7 @@ export default function CreateMoment() {
           />
         ): 
         <View>
-          <ImagePlus size={wp("15%")} color={"#666"} />
+          <MaterialIcons name="file-image-plus" style={{color: "#666", fontSize: wp("15%")}} />
         </View>}
       </TouchableOpacity>
       <StyleControls color={color} fontSize={fontSize} onColorChange={setColor} onFontSizeChange={setFontSize} />

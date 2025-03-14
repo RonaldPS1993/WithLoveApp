@@ -21,13 +21,13 @@ export default function Preview() {
         return null;
     }
     const [loading, setLoading] = useState<boolean>(false)
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
     const { image, caption, color, size } = useLocalSearchParams();
     const textColor = Array.isArray(color) ? color[0] : color || "black";
 
     const openShare = async (imageUrl: string) => {
         
-            const myUrl = Linking.createURL(MAINURL, { queryParams: {message: caption, imageUrl: imageUrl}}).replace(/^withlove:\/\//, '')
+            const myUrl = Linking.createURL(MAINURL, 
+                { queryParams: {message: caption, imageUrl: imageUrl, color: textColor, size: size}}).replace(/^withlove:\/\//, '')
             try {
                 const result = await Share.share({
                   message:

@@ -3,6 +3,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { useFonts } from 'expo-font';
 const { width, height } = Dimensions.get("window");
 import { router } from "expo-router";
+
 export default function Home() {
   const [fontsLoaded] = useFonts({
     PoppinsSemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),

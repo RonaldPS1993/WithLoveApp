@@ -9,6 +9,8 @@ import { router } from "expo-router"
 type MomentProps = {
     imageUrl?: string;
     message?: string;
+    color?: string;
+    size?: number;
 }
 
 type QueryParams = {
@@ -22,8 +24,11 @@ type ParsedURL = {
 
 
 export default function Moment(){
-    const [image, setImage] = useState<string|null>(null)
-    const [caption, setCaption] = useState<string>("")
+    // const [image, setImage] = useState<string|null>(null)
+    // const [caption, setCaption] = useState<string>("")
+    // const [textSize, setSize] = useState<number>(0)
+    // const [textColor, setColor] = useState<string>("")
+    const [moment, setMoment] = useState<MomentProps>({})
     const [loading, setLoading] = useState<boolean>(true)
     const [fontsLoaded] = useFonts({
         "PoppinsSemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
@@ -33,9 +38,16 @@ export default function Moment(){
 
     const handleUrl = (event: { url: string }) => {
         const { queryParams } = Linking.parse(event.url) as ParsedURL;
-        const { imageUrl, message } = queryParams || {};
-        setImage(imageUrl || null);
-        setCaption(message || "");
+        const { imageUrl, message, color, size } = queryParams || {};
+        // setImage(imageUrl || null);
+        // setCaption(message || "");
+        // setColor(color || "white");
+        // setSize(size || (width + height) * 0.024)
+        setMoment({imageUrl: imageUrl || "", 
+                   message: message || "", 
+                   color: color || "white", 
+                   size: size || (width + height) * 0.024
+                 });
         setLoading(false)
         setTimeout(() => {
             router.push({
@@ -69,9 +81,11 @@ export default function Moment(){
 
     
     return(
-        <ImageBackground source={{uri: image as string}} style={{width: wp("100%"), height: hp("100%"), alignItems: "center"}}>
-            <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", fontSize: (width + height) * 0.024, color: "#FFFFFF", 
-                    marginTop: hp("80%"), width: wp("85%"), height: hp("20%")}}>{caption}</Text>
+        <ImageBackground source={{uri: moment.imageUrl as string}} style={{width: wp("100%"), height: hp("100%"), alignItems: "center"}}>
+            <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", 
+            fontSize: Number(moment.size) * 2.5,
+             color: moment.color as string, 
+                    marginTop: hp("80%"), width: wp("85%"), height: hp("20%")}}>{moment.message}</Text>
         </ImageBackground>
     )
 

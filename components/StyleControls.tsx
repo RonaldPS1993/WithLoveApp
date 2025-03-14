@@ -1,7 +1,8 @@
 import React from "react"
 import { View, TouchableOpacity, StyleSheet } from "react-native"
-import { Type, Palette } from "lucide-react-native"
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Feather from "react-native-vector-icons/Feather"
+import Ionicons from "react-native-vector-icons/Ionicons"
 
 const COLORS = ["#000000", "#2563eb", "#dc2626", "#16a34a", "#eab308", "#ffffff"];
 const FONT_SIZES = [12, 14, 16, 18, 20, 22]
@@ -17,7 +18,7 @@ export default function StyleControls({color, fontSize, onColorChange, onFontSiz
     return(
         <View style={styles.container}>
             <View style={styles.row}>
-                <Type size={wp("6%")} color="#666" />
+                <Feather name="type" style={{color: "#666", fontSize: wp("6%")}} />
                 {FONT_SIZES.map((size) => (
                     <TouchableOpacity 
                         key={size} 
@@ -27,7 +28,7 @@ export default function StyleControls({color, fontSize, onColorChange, onFontSiz
                 ))}
             </View>
             <View style={styles.row}>
-                <Palette size={wp("6%")} color={"#666"} />
+                <Ionicons name="color-palette-outline" style={{color: "#666", fontSize: wp("6%")}} />
                 {COLORS.map((c) => (
                     <TouchableOpacity 
                         key={c}
