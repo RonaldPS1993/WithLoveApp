@@ -28,6 +28,8 @@ export default function Preview() {
         
             const myUrl = Linking.createURL(MAINURL, 
                 { queryParams: {message: caption, imageUrl: imageUrl, color: textColor, size: size}}).replace(/^withlove:\/\//, '')
+            // const myUrl = Linking.createURL("/showMoment", 
+            //     { queryParams: {message: caption, imageUrl: imageUrl, color: textColor, size: size}})
             try {
                 const result = await Share.share({
                   message:

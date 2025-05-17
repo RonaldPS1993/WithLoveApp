@@ -5,6 +5,8 @@ import { useState, useEffect, useCallback } from 'react';
 const { width, height } = Dimensions.get("window");
 import * as Linking from 'expo-linking';
 import { router } from "expo-router"
+import { GestureDetector, Gesture, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
 
 type MomentProps = {
     imageUrl?: string;
@@ -20,6 +22,10 @@ type QueryParams = {
 type ParsedURL = {
     queryParams?: MomentProps;
 }
+
+type ContextType = {
+    startY: number;
+};
 
 
 
@@ -48,7 +54,6 @@ export default function Moment(){
                    color: color || "white", 
                    size: size || (width + height) * 0.024
                  });
-        setLoading(false)
         setTimeout(() => {
             router.push({
                 pathname: "./(tabs)",
@@ -66,6 +71,33 @@ export default function Moment(){
             console.log(error);
         }
     };
+
+    const translateY = useSharedValue(0);
+
+    const navigateHome = () => {
+      router.push({
+        pathname: "./(tabs)",
+      })
+    };
+    
+
+    const panGesture = Gesture.Pan()
+    .onUpdate((event) => {
+      if (event.translationY > 0) {
+        translateY.value = event.translationY;
+      }
+    })
+    .onEnd((event) => {
+      if (event.translationY > 200) {
+        runOnJS(navigateHome)();
+      } else {
+        translateY.value = withSpring(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
     
     useEffect(() => {
         handleInitialUrl();
@@ -75,18 +107,24 @@ export default function Moment(){
         return null;
     }
 
-    if(loading){
+    if(!moment.imageUrl){
         return null
     }
 
     
     return(
-        <ImageBackground source={{uri: moment.imageUrl as string}} style={{width: wp("100%"), height: hp("100%"), alignItems: "center"}}>
-            <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", 
-            fontSize: Number(moment.size) * 2.5,
-             color: moment.color as string, 
-                    marginTop: hp("80%"), width: wp("85%"), height: hp("20%")}}>{moment.message}</Text>
-        </ImageBackground>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <GestureDetector gesture={panGesture}>
+            <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+              <ImageBackground source={{uri: moment.imageUrl as string}} style={{width: wp("100%"), height: hp("100%"), alignItems: "center"}}>
+                <Text numberOfLines={3} style={{fontFamily: "ClickerScript", textAlign: "center", 
+                fontSize: Number(moment.size) * 2.5,
+                color: moment.color as string, 
+                        marginTop: hp("80%"), width: wp("85%"), height: hp("20%")}}>{moment.message}</Text>
+              </ImageBackground>
+            </Animated.View>
+          </GestureDetector>
+        </GestureHandlerRootView>
     )
 
 } 

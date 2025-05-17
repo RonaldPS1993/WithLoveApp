@@ -14,7 +14,9 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.withloveapp.WithLove",
-      "associatedDomains": ["applinks:withlove.expo.app"],
+      "associatedDomains": [
+        "applinks:withlove.expo.app"
+      ],
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "fb",
@@ -22,7 +24,7 @@
           "twitter"
         ],
         "ITSAppUsesNonExemptEncryption": false
-      } 
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -67,7 +69,8 @@
             "useFrameworks": "static"
           }
         }
-      ]
+      ],
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
