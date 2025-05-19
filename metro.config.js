@@ -1,6 +1,8 @@
+// metro.config.js
 const { getDefaultConfig } = require("@expo/metro-config");
 
-const defaultConfig = getDefaultConfig(__dirname);
-defaultConfig.resolver.sourceExts.push("cjs");
+const config = getDefaultConfig(__dirname);
 
-module.exports = defaultConfig;
+console.log('✅ Using Expo Metro config')
+
+module.exports = config;
